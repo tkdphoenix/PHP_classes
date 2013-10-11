@@ -15,12 +15,12 @@ class Validate{
 	 *	@return string $msg - the error message returned in case of a validation error.
 	 */
 	public function email($email){
-		$error = false;
+		$this->error = false;
 		// for the email prefix
 		$pattern = "/^[a-zA-Z0-9][a-zA-Z0-9\._\-&!?=#]*/";
 		if(!preg_match($pattern, $email)){
 			// $email is invalid because LocalName is bad
-			$error = true;
+			$this->error = true;
 			$msg = "<p class='error'>Your email address is invalid</p>";
 			return $msg;
 		} else {
@@ -35,7 +35,7 @@ class Validate{
 			 *	be fine for regular use.
 			 */
 			if(!checkdnsrr($domain)){
-				$error = true;
+				$this->error = true;
 				$msg = "<p class='error'>Your email address is invalid</p>";
 				return $msg;
 			}
@@ -68,17 +68,17 @@ class Validate{
 	 *	All characters except for numbers are removed from the phone number for input into the database.
 	 */
 	public function usPhone($phone){
-		$error = false;
+		$this->error = false;
 		// check to see if phone number is blank
 		if(empty($phone)){
-			$error = true;
+			$this->error = true;
 			$msg = "<p class='error'>Your phone number is invalid.</p>";
 			return $msg;
 		}
 		$pattern = "/^\(?[2-9]\d{2}\)?[-\s]\d{3}-\d{4}$/";
 		if(!preg_match($pattern, $phone)){
 			// phone is not valid
-			$error = true;
+			$this->error = true;
 			$msg = "<p class='error'>Your phone number is invalid.</p>";
 			return $msg;
 		}
@@ -95,9 +95,9 @@ class Validate{
 	 *	@param string $value - value to check against  minimum number of characters
 	 */
 	public function minChar($num, $value){
-		$error = false;
+		$this->error = false;
 		if($value < $num){
-			$error = true;
+			$this->error = true;
 			$msg = "<p class='error'>The value must contain a minimum of {$num} characters.</p>";
 			return $msg;
 		}
@@ -109,9 +109,9 @@ class Validate{
 	 *	@return string $msg - the error message returned in case of a validation error.
 	 */
 	public function maxChar($num, $value){
-		$error = false;
+		$this->error = false;
 		if($value > $num){
-			$error = true;
+			$this->error = true;
 			$msg = "<p class='error'>The value must contain a maximum of {$num} characters.";
 			return $msg;
 		}
